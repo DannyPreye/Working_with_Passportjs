@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const cryto = require("crypto");
 const passport = require("passport");
-const authRoute = require("./routes/auth");
 const cors = require("cors");
+
+const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
 require("dotenv").config();
 
@@ -60,6 +62,8 @@ app.use(isLoggedIn);
 
 // *----------------------------------- *Routes----------------------------------*
 app.use("/auth", authRoute);
+app.use("/posts", postRoute);
+
 app.get("/", (req, res) => {
     if (req.session.viewCount) {
         req.session.viewCount += 1;

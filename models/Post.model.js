@@ -7,3 +7,5 @@ const PostSchema = new mongoose.Schema({
     featureImage: { type: String },
     createdAt: { type: Date, default: Date.now },
 });
+
+module.exports = connection.model("Post", PostSchema);

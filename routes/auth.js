@@ -4,7 +4,7 @@ const { genPassword } = require("../lib/passportUtils");
 const User = require("../models/User.model");
 
 router.post("/signup", async (req, res, next) => {
-    const { password, username, email } = req.body;
+    const { password, username, email, role } = req.body;
 
     const { salt, hash } = genPassword(password);
 
@@ -14,7 +14,7 @@ router.post("/signup", async (req, res, next) => {
             hash: hash,
             salt: salt,
             email: email,
-            role: "user",
+            role: role || "user",
         });
 
         const user = await newUser.save();
