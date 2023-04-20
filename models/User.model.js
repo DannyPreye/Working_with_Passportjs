@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const connection = require("../config/db.config");
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -14,4 +15,4 @@ const userSchema = new mongoose.Schema({
     createdDate: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = connection.model("User", userSchema);

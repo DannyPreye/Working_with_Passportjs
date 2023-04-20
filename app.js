@@ -4,6 +4,7 @@ const session = require("express-session");
 const cryto = require("crypto");
 const passport = require("passport");
 const authRoute = require("./routes/auth");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -24,8 +25,10 @@ const connection = mongoose.createConnection(connnectionString, options);
 
 *------------------------Middlewares--------------------------*
 */
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -41,7 +44,14 @@ app.use(
     })
 );
 
-// ----------------------------------- *Routes*----------------------------------
+// *--------------- Passport --------------------*
+// this is make app js aware the password configuration
+require("./config/passport.config");
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// *----------------------------------- *Routes----------------------------------*
 app.use("/auth", authRoute);
 app.get("/", (req, res) => {
     if (req.session.viewCount) {
