@@ -19,7 +19,6 @@ const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 };
-const connection = mongoose.createConnection(connnectionString, options);
 
 /*
 
@@ -50,6 +49,14 @@ require("./config/passport.config");
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// This is a custom middleware that will be used to check if the user is logged in
+const isLoggedIn = (req, res, next) => {
+    console.log("session", req.session);
+    console.log("user", req.user);
+    next();
+};
+app.use(isLoggedIn);
 
 // *----------------------------------- *Routes----------------------------------*
 app.use("/auth", authRoute);
